@@ -14,6 +14,13 @@ import 'package:intl/intl.dart';
 --> Here 'SingleChildScrollView' widget is used to scroll the list of transaction only,
     while in main it will scroll up the input part too
 --> 'SingleChildScrollView' inside the container ensures the scrolling of whole container
+--> 'ListView' is an alternative for SinglechildScrollView, ListView can be used in 2 ways:
+    as chlidren inside it or as ListView.builder()
+--> ListView() with childern inside it is suitable for small list, while ListView.builder() is suitable for large Lists
+    or where we don't know how many List entries are going to be saved
+--> ListView.builder() always have 'itemBuilder: (context, index)' inside it which return the output, here it is the 'Card'
+--> 'context' and 'index' reffers to the return value and the index of List repectively
+    Here the context is 'Card' which contains the information of transaction and index is the index of 'transactions' 
 */
 
 class TransactioList extends StatelessWidget {
@@ -24,52 +31,51 @@ class TransactioList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
-      child: SingleChildScrollView(
-        child: Column(
-          children: transctions.map((tx) {
-            return Card(
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                    child: Text(
-                      '\$${tx.amount}',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Colors.indigo),
-                    ),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                      color: Colors.teal,
-                      width: 2,
-                    )),
-                    padding: EdgeInsets.all(10),
+      height: 500,
+      child: ListView.builder(
+        itemBuilder: (context, index) {
+          return Card(
+            child: Row(
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  child: Text(
+                    '\$${transctions[index].amount}',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Colors.indigo),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        tx.title,
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                    color: Colors.teal,
+                    width: 2,
+                  )),
+                  padding: EdgeInsets.all(10),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      transctions[index].title,
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(250, 75, 50, 110)),
+                    ),
+                    Text(DateFormat().format(transctions[index].date),
                         style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(250, 75, 50, 110)),
-                      ),
-                      Text(DateFormat().format(tx.date),
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(250, 150, 50, 110),
-                          )),
-                    ],
-                  )
-                ],
-              ),
-            );
-          }).toList(),
-        ),
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(250, 150, 50, 110),
+                        )),
+                  ],
+                )
+              ],
+            ),
+          );
+        },
+        itemCount: transctions.length,
       ),
     );
   }
