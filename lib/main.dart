@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
     so 1 'Card' has parent 'Container' and other has 'Column' as its parent
 --> 'Container' gives the flexibility of width, actually it gives all types of styling flexibility
 --> 'elevation' inside the 'Card' controls the drop shadow
---> To make the overall content scrollable  we have to use 'SingleChildScrollView()'
+--> To make the overall content scrollable  we have to use the widget 'SingleChildScrollView()'
     i.e, just wrap the content in the SingleChildScrollView() widget
 
 */
