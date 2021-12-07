@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 --> To use any reserved key as a chracter we have to use '\' as '\$'
 --> import 'package:intl/intl.dart'; is used here to validate the 'DateFormat()'
 --> 'DateFormat()' is used to get a convienient form of Date and timme instead of just in string form
---> 'TextField()' is used to get the Text input from the user
+--> 'TextField()' is used to get the Text input from the user.
 --> 'onfield' is called when the user initiates a change to the TextField's value: when they have inserted or deleted text.
 */
 
