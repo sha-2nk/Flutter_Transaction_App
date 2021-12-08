@@ -27,6 +27,7 @@ import 'widgets/transactions_list.dart';
 --> In function 'startAddNewTransaction' we take 'ctx' as argument which will further pass as 'context' in 'showModelBottemSheet'
 --> 'builder' is a function that needs to return the widget that should be inside that 'showModalBottomSheet'
 --> 'onTap' inside 'Gesture Detector' widget is use to ensure that ModelBottemSheet will not disappear on clicking anywhere on the sheet.
+--> 'primarySwatch' is more useful than 'primarycolor' as it generates all the shades of the color
 
 */
 
@@ -40,6 +41,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false, //used to remove the debug banner
       title: 'Daily Expenses',
+      theme: ThemeData(
+          primarySwatch: Colors.lightBlue,
+          secondaryHeaderColor: Colors.redAccent),
       home: MyHomePage(),
     );
   }
@@ -134,7 +138,9 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterDocked,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          _startAddNewTransaction(context);
+        },
         child: Icon(
           Icons.add,
         ),

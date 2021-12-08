@@ -44,11 +44,11 @@ class TransactioList extends StatelessWidget {
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
-                        color: Colors.indigo),
+                        color: Theme.of(context).primaryColorDark),
                   ),
                   decoration: BoxDecoration(
                       border: Border.all(
-                    color: Colors.teal,
+                    color: Theme.of(context).primaryColorLight,
                     width: 2,
                   )),
                   padding: EdgeInsets.all(10),
@@ -61,13 +61,13 @@ class TransactioList extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(250, 75, 50, 110)),
+                          color: Theme.of(context).primaryColor),
                     ),
                     Text(DateFormat().format(transctions[index].date),
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(250, 150, 50, 110),
+                          color: Theme.of(context).primaryColor,
                         )),
                   ],
                 )

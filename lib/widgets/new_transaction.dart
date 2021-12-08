@@ -19,6 +19,9 @@ import 'package:flutter/material.dart';
     like with 'widget.addTx' we can access the 'addTx' prperty which has function reference even though we are in different class
 --> 'widget.' is only available in stateclass and gives access to the conected widget
 --> 'Navigator.of(context).pop()' used to to close the topmost screen that displayed, here it is modelsheet if it is opened
+--> By'theme' we can setup a custome theme which will be used globally in the app
+
+
 */
 
 class NewTransaction extends StatefulWidget {
