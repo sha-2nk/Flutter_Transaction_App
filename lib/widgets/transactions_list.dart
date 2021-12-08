@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, unused_field, prefer_const_constructors, sized_box_for_whitespace
+// ignore_for_file: use_key_in_widget_constructors, unused_field, prefer_const_constructors, sized_box_for_whitespace, prefer_const_constructors_in_immutables
 
 import 'package:expenses/models/transactions.dart';
 import 'package:flutter/material.dart';

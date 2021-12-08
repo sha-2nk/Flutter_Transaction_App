@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
 
@@ -13,14 +13,27 @@ import 'package:flutter/material.dart';
     here we had used number keyboard for amount entering
 --> Assigning 'titleController' and 'amtController' to 'enteredtitle' and 'enteredamt' respectively
 --> When the 'if()' condition becomes true the further function 'will not execute'
+--> 'NewTransaction' is changed from stateless to statefull widget beacuse we lost our input data after re-evaluation in stateless widget
+--> In statefull widget data stored in previous state will not lost if the widget  that belongs to it is re-evalueated
+--> By 'widget.' we can access the properties and methods of the widget class instead of the state class,
+    like with 'widget.addTx' we can access the 'addTx' prperty which has function reference even though we are in different class
+--> 'widget.' is only available in stateclass and gives access to the conected widget
+--> 'Navigator.of(context).pop()' used to to close the topmost screen that displayed, here it is modelsheet if it is opened
 */
 
-class NewTransaction extends StatelessWidget {
-  final titleController = TextEditingController();
-  final amtController = TextEditingController();
+class NewTransaction extends StatefulWidget {
   final Function addTx;
 
   NewTransaction(this.addTx);
+
+  @override
+  State<NewTransaction> createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
+  final titleController = TextEditingController();
+
+  final amtController = TextEditingController();
 
   void submitData() {
     final enteredtitle = titleController.text;
@@ -30,7 +43,9 @@ class NewTransaction extends StatelessWidget {
       return;
     }
 
-    addTx(titleController.text, double.parse(amtController.text));
+    widget.addTx(titleController.text, double.parse(amtController.text));
+
+    Navigator.of(context).pop();
   }
 
   @override

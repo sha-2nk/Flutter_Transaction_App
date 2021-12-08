@@ -26,7 +26,8 @@ import 'widgets/transactions_list.dart';
 --> 'showModelBottemSheet' is used when we tap a button a model sheet should appear from bottem
 --> In function 'startAddNewTransaction' we take 'ctx' as argument which will further pass as 'context' in 'showModelBottemSheet'
 --> 'builder' is a function that needs to return the widget that should be inside that 'showModalBottomSheet'
--->
+--> 'onTap' inside 'Gesture Detector' widget is use to ensure that ModelBottemSheet will not disappear on clicking anywhere on the sheet.
+
 */
 
 void main() {
@@ -85,7 +86,11 @@ class _MyHomePageState extends State<MyHomePage> {
     showModalBottomSheet(
         context: ctx,
         builder: (_) {
-          return NewTransaction(_addNewTx);
+          return GestureDetector(
+            onTap: () {},
+            child: NewTransaction(_addNewTx),
+            behavior: HitTestBehavior.opaque,
+          );
         });
   }
 
