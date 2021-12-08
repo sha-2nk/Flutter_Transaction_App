@@ -21,6 +21,15 @@ import 'package:intl/intl.dart';
 --> ListView.builder() always have 'itemBuilder: (context, index)' inside it which return the output, here it is the 'Card'
 --> 'context' and 'index' reffers to the return value and the index of List repectively
     Here the context is 'Card' which contains the information of transaction and index is the index of 'transactions' 
+--> Ternary condition is applied if the list of transaction is empty then the pic will show, 
+    this condition is used before 'ListView.builder'
+--> Image.asset is used to insert the image which mandetorily takes location of pic
+--> To fit the image in sthe screen 'fit' is used which takes 'BoxFit' 
+--> Here we have put image in 'Container' instead of 'column' because 'columns' take as much height as they can get, 
+    so the image will not infer the size into which it should squeeze, it would need access the 'conatiner'.
+    So it is advisable whenever there is an issue related with the size, wrap the things inside the 'Column'
+--> To get the space b/w Text and image we define 'SizedBox' b/w, it which can take height and width as argument,
+    'SizedBox' is white space so it does not appear on the UI
 */
 
 class TransactioList extends StatelessWidget {
@@ -32,51 +41,70 @@ class TransactioList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 500,
-      child: ListView.builder(
-        itemBuilder: (context, index) {
-          return Card(
-            child: Row(
+      child: transctions.isEmpty
+          ? Column(
               children: <Widget>[
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                  child: Text(
-                    '\$${transctions[index].amount}',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Theme.of(context).primaryColorDark),
-                  ),
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                    color: Theme.of(context).primaryColorLight,
-                    width: 2,
-                  )),
-                  padding: EdgeInsets.all(10),
+                Text(
+                  'No Transaction is added yet !',
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      transctions[index].title,
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).primaryColor),
-                    ),
-                    Text(DateFormat().format(transctions[index].date),
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).primaryColor,
-                        )),
-                  ],
-                )
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                    height: 200,
+                    child: Image.asset(
+                      'assets/pics/1476246.jpg',
+                      fit: BoxFit.cover,
+                    )),
               ],
+            )
+          : ListView.builder(
+              itemBuilder: (context, index) {
+                return Card(
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        margin:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                        child: Text(
+                          '\$${transctions[index].amount}',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Theme.of(context).primaryColorDark),
+                        ),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                          color: Theme.of(context).primaryColorLight,
+                          width: 2,
+                        )),
+                        padding: EdgeInsets.all(10),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            transctions[index].title,
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).primaryColor),
+                          ),
+                          Text(DateFormat().format(transctions[index].date),
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).primaryColor,
+                              )),
+                        ],
+                      )
+                    ],
+                  ),
+                );
+              },
+              itemCount: transctions.length,
             ),
-          );
-        },
-        itemCount: transctions.length,
-      ),
     );
   }
 }
