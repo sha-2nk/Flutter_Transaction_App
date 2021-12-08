@@ -28,7 +28,10 @@ import 'widgets/transactions_list.dart';
 --> 'builder' is a function that needs to return the widget that should be inside that 'showModalBottomSheet'
 --> 'onTap' inside 'Gesture Detector' widget is use to ensure that ModelBottemSheet will not disappear on clicking anywhere on the sheet.
 --> 'primarySwatch' is more useful than 'primarycolor' as it generates all the shades of the color
-
+--> Added custom fonts in assets>fonts and make the change in pubsec.yaml file,
+    then in main file we change the 'fontfamily' name same as we declare in .yaml file
+--> A custom appBarTheme is created, here which will take care of text styling of app bar 
+--> Custom theme for rest of the text (except appBar) is also craeted
 */
 
 void main() {
@@ -43,7 +46,18 @@ class MyApp extends StatelessWidget {
       title: 'Daily Expenses',
       theme: ThemeData(
           primarySwatch: Colors.lightBlue,
-          secondaryHeaderColor: Colors.redAccent),
+          secondaryHeaderColor: Colors.redAccent,
+          fontFamily: 'Quicksand',
+          textTheme: TextTheme(
+              bodyText1: TextStyle(
+                  fontFamily: 'OpenSans',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18)),
+          appBarTheme: AppBarTheme(
+              titleTextStyle: TextStyle(
+                  fontFamily: 'OpenSans',
+                  fontSize: 20,
+                  fontStyle: FontStyle.italic))),
       home: MyHomePage(),
     );
   }
