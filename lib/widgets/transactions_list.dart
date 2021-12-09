@@ -52,9 +52,9 @@ class TransactioList extends StatelessWidget {
                   height: 20,
                 ),
                 Container(
-                    height: 200,
+                    height: 455,
                     child: Image.asset(
-                      'assets/pics/1476246.jpg',
+                      'assets/pics/cat1.jpg',
                       fit: BoxFit.cover,
                     )),
               ],
