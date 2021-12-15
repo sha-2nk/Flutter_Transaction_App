@@ -4,6 +4,7 @@ import 'package:expenses/widgets/new_transaction.dart';
 import 'package:flutter/material.dart';
 import './models/transactions.dart';
 import 'widgets/transactions_list.dart';
+import './widgets/chart.dart';
 
 /*
 --> 'Column' has main axis Vertical and Cross axis horizontal, and vice-versa for Row
@@ -32,6 +33,13 @@ import 'widgets/transactions_list.dart';
     then in main file we change the 'fontfamily' name same as we declare in .yaml file
 --> A custom appBarTheme is created, here which will take care of text styling of app bar 
 --> Custom theme for rest of the text (except appBar) is also craeted
+--> Chart folder for 7 weekdays need to place above the List so we placed 'Chart' above it
+--> For Chart bar we have to get only the recent transactions which happened in the last week,
+    so we use a getter for thet and we use a method called 'where' which comes with 'List'
+--> 'where' allows to runa function on every item in a list and if that function returns true, the item is kept
+    in a truly returned list otherwise it's not included in that newly returned list.
+--> 'date.isafter' is used to check after a certain date
+--> 'subtract' under 'Datetime' takes 'Duration' which will subtract those many days of 'Duration'
 */
 
 void main() {
@@ -88,6 +96,16 @@ class _MyHomePageState extends State<MyHomePage> {
     // ),
   ];
 
+  List<Transaction> get _recentTransactions {
+    return _userTransactions.where((tx) {
+      return tx.date.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
+    }).toList();
+  }
+
   void _addNewTx(String title, double amt) {
     final newTx = Transaction(
         id: DateTime.now().toString(),
@@ -129,22 +147,7 @@ class _MyHomePageState extends State<MyHomePage> {
           //mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Container(
-              alignment: Alignment(0.0, 3.0),
-              width: double.infinity,
-              child: Card(
-                elevation: 5,
-                color: Colors.purple[200],
-                child: Text(
-                  'CHART',
-                  style: TextStyle(
-                    fontStyle: FontStyle.italic,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-              ),
-            ),
+            Chart(_recentTransactions),
             TransactioList(_userTransactions),
           ],
         ),
