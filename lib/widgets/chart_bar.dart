@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 --> 'FractionallySizedBox' this allows to create a box that is sized as a fraction of another value.
     'heightFactor:' tkes the height from 0 to 1, at 1 it eill takes the height of parent 'container' (here 60),
     but we wants height according to the spendings so we use 'spendingPctOfTotal'
+--> 'FittedBox' widget forced its child into the avilable space and if the child is text, it shrinks the text
 --> 'Text(label)' is used to display the weekdays
 */
 

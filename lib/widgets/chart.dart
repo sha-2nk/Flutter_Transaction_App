@@ -20,6 +20,11 @@ import './chart_bar.dart';
     the for loop so it will check for all 7 days one by one
 --> 'substring(0, 1)' will give only first character coz it will start at 0 and at 1
 --> 'chart.dart' done everything now we just have to creates bar for store the information from 'chart.dart'
+--> 'MainAxisAlignment.spaceAround' is used to Align the bars in the whole space avilable for it
+--> Every bar has the equal space, so for a very large dits of amount there will be disturbance in allignment,
+    so here we use 'Flexible', with 'FlexFit.tight' we force a child onto its assigned width and size, but this would 
+    shrinken the line of bar so we have to take care of taht.
+--> 'FittedBox' in chart_bar.dart would take care of that, it would shrink the amount 
 */
 
 class Chart extends StatelessWidget {
