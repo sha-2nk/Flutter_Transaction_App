@@ -30,18 +30,20 @@ import 'package:intl/intl.dart';
     So it is advisable whenever there is an issue related with the size, wrap the things inside the 'Column'
 --> To get the space b/w Text and image we define 'SizedBox' b/w, it which can take height and width as argument,
     'SizedBox' is white space so it does not appear on the UI
+--> 'ListTile()' is a single fixed-height row that typically contains some text as well as a leading or trailing icon.
+    'leading' is basically used to create the icons at the beginning of the List
 */
 
 class TransactioList extends StatelessWidget {
-  final List<Transaction> transctions;
+  final List<Transaction> transactions;
 
-  TransactioList(this.transctions);
+  TransactioList(this.transactions);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 500,
-      child: transctions.isEmpty
+      child: transactions.isEmpty
           ? Column(
               children: <Widget>[
                 Text(
@@ -62,48 +64,27 @@ class TransactioList extends StatelessWidget {
           : ListView.builder(
               itemBuilder: (context, index) {
                 return Card(
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        margin:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                        child: Text(
-                          '\$${transctions[index].amount}',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Theme.of(context).primaryColorDark),
-                        ),
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                          color: Theme.of(context).primaryColorLight,
-                          width: 2,
-                        )),
-                        padding: EdgeInsets.all(10),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            transctions[index].title,
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).primaryColor),
-                          ),
-                          Text(DateFormat().format(transctions[index].date),
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).primaryColor,
-                              )),
-                        ],
-                      )
-                    ],
+                  elevation: 7,
+                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 30,
+                      backgroundColor: Colors.purple[200],
+                      child: Padding(
+                          padding: EdgeInsets.all(6),
+                          child: FittedBox(
+                              child: Text('\$${transactions[index].amount}'))),
+                    ),
+                    title: Text(
+                      transactions[index].title,
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    subtitle: Text(
+                        DateFormat.yMMMd().format(transactions[index].date)),
                   ),
                 );
               },
-              itemCount: transctions.length,
+              itemCount: transactions.length,
             ),
     );
   }
