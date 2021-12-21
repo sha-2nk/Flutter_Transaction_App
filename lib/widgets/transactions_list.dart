@@ -32,12 +32,15 @@ import 'package:intl/intl.dart';
     'SizedBox' is white space so it does not appear on the UI
 --> 'ListTile()' is a single fixed-height row that typically contains some text as well as a leading or trailing icon.
     'leading' is basically used to create the icons at the beginning of the List
+--> After passing 'deleteTransaction' in TransactionList in 'main.dart' we have to accept it in this .dart file.
+--> So here we create the function delteTx and passed it to the onpressed which takes the 'id' as an argument
 */
 
-class TransactioList extends StatelessWidget {
+class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
+  final Function deleteTx;
 
-  TransactioList(this.transactions);
+  TransactionList(this.transactions, this.deleteTx);
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +77,11 @@ class TransactioList extends StatelessWidget {
                           padding: EdgeInsets.all(6),
                           child: FittedBox(
                               child: Text('\$${transactions[index].amount}'))),
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete_rounded),
+                      color: Colors.red[900],
+                      onPressed: () => deleteTx(transactions[index].id),
                     ),
                     title: Text(
                       transactions[index].title,

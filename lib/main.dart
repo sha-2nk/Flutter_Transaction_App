@@ -40,6 +40,8 @@ import './widgets/chart.dart';
     in a truly returned list otherwise it's not included in that newly returned list.
 --> 'date.isafter' is used to check after a certain date
 --> 'subtract' under 'Datetime' takes 'Duration' which will subtract those many days of 'Duration'
+--> We have created a d'eleteTransaction' function which wiil be called from 'transactionList.dart'. So let's pass the 
+    deleteTransaction() to the 'transactionList'
 */
 
 void main() {
@@ -130,6 +132,12 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((tx) => tx.id == id);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -148,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Chart(_recentTransactions),
-            TransactioList(_userTransactions),
+            TransactionList(_userTransactions, _deleteTransaction),
           ],
         ),
       ),
