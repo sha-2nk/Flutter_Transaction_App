@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_constructors_in_immutables
 
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 /*
@@ -70,12 +72,27 @@ class _NewTransactionState extends State<NewTransaction> {
               keyboardType: TextInputType.number,
               onSubmitted: (value) => submitData(),
             ),
-            TextButton(
+            Container(
+              height: 70,
+              child: Row(
+                children: <Widget>[
+                  Text('No Date Chosen!'),
+                  TextButton(
+                    style: TextButton.styleFrom(primary: Colors.blueGrey[900]),
+                    onPressed: () {},
+                    child: Text('Choose Date',
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                  )
+                ],
+              ),
+            ),
+            ElevatedButton(
               onPressed: submitData,
               child: Text('Add Transaction'),
               style: TextButton.styleFrom(
                   padding: EdgeInsets.all(10),
                   primary: Colors.purple[800],
+                  backgroundColor: Colors.pink[50],
                   textStyle:
                       TextStyle(fontSize: 20, fontStyle: FontStyle.italic)),
             )
