@@ -42,6 +42,7 @@ import './widgets/chart.dart';
 --> 'subtract' under 'Datetime' takes 'Duration' which will subtract those many days of 'Duration'
 --> We have created a d'eleteTransaction' function which wiil be called from 'transactionList.dart'. So let's pass the 
     deleteTransaction() to the 'transactionList'
+--> To accept the picked date, we add an argumnet 'chosendte; in '_addNewTx()' and use 'chosenDate' in 'date:' argument in 'Transactions'
 */
 
 void main() {
@@ -108,12 +109,12 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  void _addNewTx(String title, double amt) {
+  void _addNewTx(String title, double amt, DateTime chosenDate) {
     final newTx = Transaction(
         id: DateTime.now().toString(),
         title: title,
         amount: amt,
-        date: DateTime.now());
+        date: chosenDate);
 
     setState(() {
       _userTransactions.add(newTx);
