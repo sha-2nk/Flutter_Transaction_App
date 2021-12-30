@@ -43,6 +43,9 @@ import './widgets/chart.dart';
 --> We have created a d'eleteTransaction' function which wiil be called from 'transactionList.dart'. So let's pass the 
     deleteTransaction() to the 'transactionList'
 --> To accept the picked date, we add an argumnet 'chosendte; in '_addNewTx()' and use 'chosenDate' in 'date:' argument in 'Transactions'
+--> To detect the maximum height available in a device, we will use 'Mediaquerry().of(context)' class which gives many option of styling,
+    (here we have stored App Bar in a vriable appBar so that we can use it as an object anywhere), here for chartBar we will take 40 % of
+    (the full aivalble height for that - appBar height - status bar height) 
 */
 
 void main() {
@@ -141,23 +144,34 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: Text('Daily Expenses'),
+      actions: <Widget>[
+        IconButton(
+          onPressed: () => _startAddNewTransaction(context),
+          icon: Icon(Icons.add),
+        )
+      ],
+    );
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Daily Expenses'),
-        actions: <Widget>[
-          IconButton(
-            onPressed: () => _startAddNewTransaction(context),
-            icon: Icon(Icons.add),
-          )
-        ],
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           //mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Chart(_recentTransactions),
-            TransactionList(_userTransactions, _deleteTransaction),
+            Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context).padding.top) *
+                    0.4,
+                child: Chart(_recentTransactions)),
+            Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context).padding.top) *
+                    0.6,
+                child: TransactionList(_userTransactions, _deleteTransaction)),
           ],
         ),
       ),
