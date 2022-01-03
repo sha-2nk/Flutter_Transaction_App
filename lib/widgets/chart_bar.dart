@@ -13,6 +13,11 @@ import 'package:flutter/material.dart';
     but we wants height according to the spendings so we use 'spendingPctOfTotal'
 --> 'FittedBox' widget forced its child into the avilable space and if the child is text, it shrinks the text
 --> 'Text(label)' is used to display the weekdays
+--> 'LayoutBuilder' tskes an argument builder() which gives 2 argument 1 is 'context' and 2nd is 'constraints',
+    'context' is self call be flutter, 'constraints' define how a widget is render on the screen, it takes height and width
+--> By 'constraints' we can dynamically calculate the height and width of elements inside that widget, 
+    by constraints.maxHeight and constraints.maxWidth we will get the max height avilable for it,
+    and we can devide into fractions which all add up to 1.
 */
 
 class ChartBar extends StatelessWidget {
@@ -24,43 +29,51 @@ class ChartBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        FittedBox(
-          child: Text('\$${spendingAmount.toStringAsFixed(0)}'),
-        ),
-        SizedBox(
-          height: 4,
-        ),
-        Container(
-          height: 60,
-          width: 10,
-          child: Stack(
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey, width: 1.0),
-                  color: Color.fromRGBO(220, 220, 220, 1),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              FractionallySizedBox(
-                heightFactor: spendingPctOfTotal,
-                child: Container(
+    return LayoutBuilder(builder: (ctx, constraints) {
+      return Column(
+        children: <Widget>[
+          Container(
+            height: constraints.maxHeight * 0.15,
+            child: FittedBox(
+              child: Text('\$${spendingAmount.toStringAsFixed(0)}'),
+            ),
+          ),
+          SizedBox(
+            height: constraints.maxHeight * 0.05,
+          ),
+          Container(
+            height: constraints.maxHeight * 0.6,
+            width: constraints.maxWidth,
+            child: Stack(
+              children: <Widget>[
+                Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
+                    border: Border.all(color: Colors.grey, width: 1.0),
+                    color: Color.fromRGBO(220, 220, 220, 1),
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-              ),
-            ],
+                FractionallySizedBox(
+                  heightFactor: spendingPctOfTotal,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        SizedBox(
-          height: 4,
-        ),
-        Text(label),
-      ],
-    );
+          SizedBox(
+            height: constraints.maxHeight * 0.05,
+          ),
+          Container(
+            child: FittedBox(child: Text(label)),
+            height: constraints.maxHeight * 0.15,
+          ),
+        ],
+      );
+    });
   }
 }

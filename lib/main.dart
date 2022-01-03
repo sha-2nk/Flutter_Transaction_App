@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import './models/transactions.dart';
 import 'widgets/transactions_list.dart';
 import './widgets/chart.dart';
+import 'package:flutter/services.dart';
 
 /*
 --> 'Column' has main axis Vertical and Cross axis horizontal, and vice-versa for Row
@@ -44,11 +45,17 @@ import './widgets/chart.dart';
     deleteTransaction() to the 'transactionList'
 --> To accept the picked date, we add an argumnet 'chosendte; in '_addNewTx()' and use 'chosenDate' in 'date:' argument in 'Transactions'
 --> To detect the maximum height available in a device, we will use 'Mediaquerry().of(context)' class which gives many option of styling,
-    (here we have stored App Bar in a vriable appBar so that we can use it as an object anywhere), here for chartBar we will take 40 % of
+    (here we have stored App Bar in a vriable appBar so that we can use it as an object anywhere), here for chartBar we will take 22 % of
     (the full aivalble height for that - appBar height - status bar height) 
+--> SystemChrome class Controls specific aspects of the operating system's graphical interface and how it interacts with the application.
+    setPreferredOrientations(List<DeviceOrientation> orientations) => Specifies the set of orientations the application interface can be displayed in.
+--> To use SystemChrome class we have to import 'package:flutter/services.dart'
+--> We don't want to render chart and list but either of the 2, so we will use 'Switch()' whi ch will give a button to choose.
 */
 
 void main() {
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   runApp(MyApp());
 }
 
@@ -112,6 +119,8 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
+  bool _showChart = false;
+
   void _addNewTx(String title, double amt, DateTime chosenDate) {
     final newTx = Transaction(
         id: DateTime.now().toString(),
@@ -160,18 +169,33 @@ class _MyHomePageState extends State<MyHomePage> {
           //mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Container(
-                height: (MediaQuery.of(context).size.height -
-                        appBar.preferredSize.height -
-                        MediaQuery.of(context).padding.top) *
-                    0.4,
-                child: Chart(_recentTransactions)),
-            Container(
-                height: (MediaQuery.of(context).size.height -
-                        appBar.preferredSize.height -
-                        MediaQuery.of(context).padding.top) *
-                    0.6,
-                child: TransactionList(_userTransactions, _deleteTransaction)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Show Chart'),
+                Switch(
+                    value: true,
+                    onChanged: (val) {
+                      setState(() {
+                        _showChart = val;
+                      });
+                    }),
+              ],
+            ),
+            _showChart
+                ? Container(
+                    height: (MediaQuery.of(context).size.height -
+                            appBar.preferredSize.height -
+                            MediaQuery.of(context).padding.top) *
+                        0.25,
+                    child: Chart(_recentTransactions))
+                : Container(
+                    height: (MediaQuery.of(context).size.height -
+                            appBar.preferredSize.height -
+                            MediaQuery.of(context).padding.top) *
+                        0.76,
+                    child:
+                        TransactionList(_userTransactions, _deleteTransaction)),
           ],
         ),
       ),
