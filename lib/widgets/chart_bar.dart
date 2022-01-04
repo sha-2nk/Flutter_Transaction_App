@@ -43,13 +43,13 @@ class ChartBar extends StatelessWidget {
           ),
           Container(
             height: constraints.maxHeight * 0.6,
-            width: constraints.maxWidth,
+            width: constraints.maxWidth * 0.7,
             child: Stack(
               children: <Widget>[
                 Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey, width: 1.0),
-                    color: Color.fromRGBO(220, 220, 220, 1),
+                    border: Border.all(color: Colors.grey, width: 1.4),
+                    color: Colors.blue[100],
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),

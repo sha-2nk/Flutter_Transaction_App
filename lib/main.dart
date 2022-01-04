@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, sized_box_for_whitespace, prefer_const_literals_to_create_immutables
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, unused_import
 
 import 'package:expenses/widgets/new_transaction.dart';
 import 'package:flutter/material.dart';
@@ -51,11 +51,14 @@ import 'package:flutter/services.dart';
     setPreferredOrientations(List<DeviceOrientation> orientations) => Specifies the set of orientations the application interface can be displayed in.
 --> To use SystemChrome class we have to import 'package:flutter/services.dart'
 --> We don't want to render chart and list but either of the 2, so we will use 'Switch()' whi ch will give a button to choose.
+--> We want to use the Show Chert Button onli in lansacpe mode, so we have to first check wheter iit is landscape or not?
+    A final Varibale 'isLandScape' is ctreated tho check the orientation.
+--> Inside the List statement we can't use if statement with curly braces{} simply use ()
 */
 
 void main() {
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
+  //SystemChrome.setPreferredOrientations(
+  //  [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   runApp(MyApp());
 }
 
@@ -153,6 +156,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final isLandScape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
     final appBar = AppBar(
       title: Text('Daily Expenses'),
       actions: <Widget>[
@@ -162,6 +167,12 @@ class _MyHomePageState extends State<MyHomePage> {
         )
       ],
     );
+    final txlist = Container(
+        height: (MediaQuery.of(context).size.height -
+                appBar.preferredSize.height -
+                MediaQuery.of(context).padding.top) *
+            0.76,
+        child: TransactionList(_userTransactions, _deleteTransaction));
     return Scaffold(
       appBar: appBar,
       body: SingleChildScrollView(
@@ -169,33 +180,38 @@ class _MyHomePageState extends State<MyHomePage> {
           //mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Show Chart'),
-                Switch(
-                    value: true,
+            if (isLandScape)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Show Chart'),
+                  Switch(
+                    value: _showChart,
                     onChanged: (val) {
                       setState(() {
                         _showChart = val;
                       });
-                    }),
-              ],
-            ),
-            _showChart
-                ? Container(
-                    height: (MediaQuery.of(context).size.height -
-                            appBar.preferredSize.height -
-                            MediaQuery.of(context).padding.top) *
-                        0.25,
-                    child: Chart(_recentTransactions))
-                : Container(
-                    height: (MediaQuery.of(context).size.height -
-                            appBar.preferredSize.height -
-                            MediaQuery.of(context).padding.top) *
-                        0.76,
-                    child:
-                        TransactionList(_userTransactions, _deleteTransaction)),
+                    },
+                  ),
+                ],
+              ),
+            if (!isLandScape)
+              Container(
+                  height: (MediaQuery.of(context).size.height -
+                          appBar.preferredSize.height -
+                          MediaQuery.of(context).padding.top) *
+                      0.3,
+                  child: Chart(_recentTransactions)),
+            if (!isLandScape) txlist,
+            if (isLandScape)
+              _showChart
+                  ? Container(
+                      height: (MediaQuery.of(context).size.height -
+                              appBar.preferredSize.height -
+                              MediaQuery.of(context).padding.top) *
+                          0.7,
+                      child: Chart(_recentTransactions))
+                  : txlist
           ],
         ),
       ),

@@ -69,7 +69,7 @@ class _NewTransactionState extends State<NewTransaction> {
             context: context,
             initialDate: DateTime.now(),
             firstDate: DateTime(2021),
-            lastDate: DateTime(2022))
+            lastDate: DateTime(2023))
         .then((pickedDate) {
       if (pickedDate == null) {
         return;
