@@ -156,8 +156,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final isLandScape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+    final mediaquery = MediaQuery.of(
+        context); // MediaQuery.of(context) is used alot so we store it in a variable
+    final isLandScape = mediaquery.orientation == Orientation.landscape;
     final appBar = AppBar(
       title: Text('Daily Expenses'),
       actions: <Widget>[
@@ -168,9 +169,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ],
     );
     final txlist = Container(
-        height: (MediaQuery.of(context).size.height -
+        height: (mediaquery.size.height -
                 appBar.preferredSize.height -
-                MediaQuery.of(context).padding.top) *
+                mediaquery.padding.top) *
             0.76,
         child: TransactionList(_userTransactions, _deleteTransaction));
     return Scaffold(
@@ -197,18 +198,18 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             if (!isLandScape)
               Container(
-                  height: (MediaQuery.of(context).size.height -
+                  height: (mediaquery.size.height -
                           appBar.preferredSize.height -
-                          MediaQuery.of(context).padding.top) *
+                          mediaquery.padding.top) *
                       0.3,
                   child: Chart(_recentTransactions)),
             if (!isLandScape) txlist,
             if (isLandScape)
               _showChart
                   ? Container(
-                      height: (MediaQuery.of(context).size.height -
+                      height: (mediaquery.size.height -
                               appBar.preferredSize.height -
-                              MediaQuery.of(context).padding.top) *
+                              mediaquery.padding.top) *
                           0.7,
                       child: Chart(_recentTransactions))
                   : txlist

@@ -82,57 +82,65 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 10,
-      child: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Title',
+    return SingleChildScrollView(
+      // When Keyboard appears the card will scroll up with the help of 'SingleChildScrollView' widget
+      child: Card(
+        elevation: 10,
+        child: Container(
+          padding: EdgeInsets.only(
+              left: 10,
+              right: 10,
+              top: 10,
+              bottom: MediaQuery.of(context).viewInsets.bottom + 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'Title',
+                ),
+                style: TextStyle(fontWeight: FontWeight.w600),
+                controller: _titleController,
+                onSubmitted: (value) => submitData(),
               ),
-              style: TextStyle(fontWeight: FontWeight.w600),
-              controller: _titleController,
-              onSubmitted: (value) => submitData(),
-            ),
-            TextField(
-              decoration: InputDecoration(labelText: 'Amount'),
-              style: TextStyle(fontWeight: FontWeight.w600),
-              controller: _amtController,
-              keyboardType: TextInputType.number,
-              onSubmitted: (value) => submitData(),
-            ),
-            Container(
-              height: 70,
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Text(_selectedDate == null
-                        ? 'No Date Chosen!'
-                        : 'Picked Data: ${DateFormat.yMd().format(_selectedDate)}'),
-                  ),
-                  TextButton(
-                    style: TextButton.styleFrom(primary: Colors.blueGrey[900]),
-                    onPressed: _datePicker,
-                    child: Text('Choose Date',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                  )
-                ],
+              TextField(
+                decoration: InputDecoration(labelText: 'Amount'),
+                style: TextStyle(fontWeight: FontWeight.w600),
+                controller: _amtController,
+                keyboardType: TextInputType.number,
+                onSubmitted: (value) => submitData(),
               ),
-            ),
-            ElevatedButton(
-              onPressed: submitData,
-              child: Text('Add Transaction'),
-              style: TextButton.styleFrom(
-                  padding: EdgeInsets.all(10),
-                  primary: Colors.purple[800],
-                  backgroundColor: Colors.pink[50],
-                  textStyle:
-                      TextStyle(fontSize: 20, fontStyle: FontStyle.italic)),
-            )
-          ],
+              Container(
+                height: 70,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(_selectedDate == null
+                          ? 'No Date Chosen!'
+                          : 'Picked Data: ${DateFormat.yMd().format(_selectedDate)}'),
+                    ),
+                    TextButton(
+                      style:
+                          TextButton.styleFrom(primary: Colors.blueGrey[900]),
+                      onPressed: _datePicker,
+                      child: Text('Choose Date',
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                    )
+                  ],
+                ),
+              ),
+              ElevatedButton(
+                onPressed: submitData,
+                child: Text('Add Transaction'),
+                style: TextButton.styleFrom(
+                    padding: EdgeInsets.all(10),
+                    primary: Colors.purple[800],
+                    backgroundColor: Colors.pink[50],
+                    textStyle:
+                        TextStyle(fontSize: 20, fontStyle: FontStyle.italic)),
+              )
+            ],
+          ),
         ),
       ),
     );
