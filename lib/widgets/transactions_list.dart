@@ -40,8 +40,7 @@ class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
   final Function deleteTx;
 
-  TransactionList(this.transactions, this.deleteTx);
-
+  const TransactionList(this.transactions, this.deleteTx);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -80,12 +79,12 @@ class TransactionList extends StatelessWidget {
                       foregroundColor: Colors.deepPurple[900],
                       backgroundColor: Colors.red[100],
                       child: Padding(
-                          padding: EdgeInsets.all(6),
+                          padding: const EdgeInsets.all(6),
                           child: FittedBox(
                               child: Text('\$${transactions[index].amount}'))),
                     ),
                     trailing: IconButton(
-                      icon: Icon(Icons.delete_rounded),
+                      icon: const Icon(Icons.delete_rounded),
                       color: Colors.red[900],
                       onPressed: () => deleteTx(transactions[index].id),
                     ),
